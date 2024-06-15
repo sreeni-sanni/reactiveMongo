@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "7e10d05c-1b66-45b8-925b-b77c7fd01b54",
+		"name": "ReactiveMongo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2271879",
+		"_collection_link": "https://restless-crescent-488013.postman.co/workspace/Team-Workspace~4c71037b-f1ff-47de-8d21-2c061a2d445f/collection/2271879-7e10d05c-1b66-45b8-925b-b77c7fd01b54?action=share&source=collection_link&creator=2271879"
+	},
+	"item": [
+		{
+			"name": "create article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"java17 Techical guide\",\r\n\"pagesCount\": 3,\r\n\"author\": \"Hanvika\",\r\n\"type\":\"offline\",\r\n\"publishDate\":\"15-06-2024\",\r\n\"subject\":\"Build Article app by using Spring webFlux and java17\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/article",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"offline\"\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/article/0f1a172b2cda4d428dcd18fd039ad299",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"article",
+						"0f1a172b2cda4d428dcd18fd039ad299"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "articles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/articles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "articlesByAuthor",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/articlesByAuthor?author=Sreeni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"articlesByAuthor"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "Sreeni"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getArticleById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/article/0f1a172b2cda4d428dcd18fd039ad299",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"article",
+						"0f1a172b2cda4d428dcd18fd039ad299"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "c083592a90b244dcaf8363681bec410c",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getArticles",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"3c192614a1dc40e78f188d434805c7a9\",\r\n\"0f1a172b2cda4d428dcd18fd039ad299\",\r\n\"16557040bdab4cc4b96b899d2b18fa2e\"]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/getArticles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"getArticles"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
