@@ -31,10 +31,16 @@ public class ArticleService {
 	}
 
 	public Mono<Article> updateArtical(String articleId, Article article) throws ApplicationAPIException {
+		
 		Query query = new Query(Criteria.where("articleId").is(articleId));
-		Update update = new Update().set("type", article.getType());
-		return reactiveMongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true),
-				Article.class);
+		  Update update = new Update().set("type", article.getType());
+		  return reactiveMongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true), Article.class);
+		 
+		/*
+		 * return reactiveMongoTemplate.findById(articleId, Article.class).flatMap(art
+		 * ->{ art.setType(article.getType()); return reactiveMongoTemplate.save(art);
+		 * });
+		 */
 	}
 
 	public Flux<Article> getAllArticles() throws ApplicationAPIException {

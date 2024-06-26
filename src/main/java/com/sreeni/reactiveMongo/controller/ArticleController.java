@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sreeni.reactiveMongo.exception.ApplicationAPIException;
 import com.sreeni.reactiveMongo.model.Article;
 import com.sreeni.reactiveMongo.service.ArticleService;
 
@@ -33,14 +33,20 @@ public class ArticleController {
 
 	@PostMapping(value = "/article", produces = { "application/json" }, consumes = { "application/json" })
 	public Mono<ResponseEntity<String>> createArticle(@RequestBody Article article) {
-		return articleService.saveArticle(article).map(res -> ResponseEntity.status(HttpStatus.OK)
-				.body("Article is created successfully " + res.getArticleId()));
+
+		return articleService.saveArticle(article)
+				.doOnSuccess(res -> log.info("Article is created successfully : {}", res.getArticleId()))
+				.doOnError(err -> new ApplicationAPIException(err.getMessage())).map(res -> ResponseEntity
+						.status(HttpStatus.OK).body("Article is created successfully " + res.getArticleId()));
 
 	}
 
 	@PutMapping(value = "/article/{articleId}", produces = { "application/json" }, consumes = { "application/json" })
-	public Mono<ResponseEntity<Article>> updateArticle(@PathVariable String articleId, @RequestBody Article article)  {
-		return articleService.updateArtical(articleId,article).map(res -> ResponseEntity.status(HttpStatus.OK).body(res));
+	public Mono<ResponseEntity<Article>> updateArticle(@PathVariable String articleId, @RequestBody Article article) {
+		return articleService.updateArtical(articleId, article)
+				.doOnSuccess(res -> log.info("Article is updated successfully : {}", articleId))
+				.doOnError(err -> new ApplicationAPIException(err.getMessage()))
+				.map(res -> ResponseEntity.status(HttpStatus.OK).body(res));
 	}
 
 	@GetMapping(value = "/articles", produces = { "application/json" }, consumes = { "application/json" })
@@ -48,7 +54,7 @@ public class ArticleController {
 		return articleService.getAllArticles();
 
 	}
-	
+
 	@GetMapping(value = "/articlesByAuthor", produces = { "application/json" }, consumes = { "application/json" })
 	public Flux<Article> getArticlesByAuthor(@RequestParam String author) {
 		return articleService.findArticlesByAuthor(author);
@@ -60,7 +66,7 @@ public class ArticleController {
 		return articleService.getArticleById(articleId);
 
 	}
-	
+
 	@PostMapping(value = "/getArticles", produces = { "application/json" }, consumes = { "application/json" })
 	public Flux<Article> getArticles(@RequestBody List<String> articleIdList) {
 		return articleService.getArticles(articleIdList);
